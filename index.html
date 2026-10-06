@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DistroWave</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#eee;font-family:Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.top{height:65px;padding:12px 18px;border-bottom:1px solid #292929;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#090909;z-index:5}
+.brand{display:flex;align-items:center;gap:9px;font-weight:bold}
+.ab{width:38px;height:38px;border:1px solid #d9ad45;border-radius:50%;display:grid;place-items:center;color:#d9ad45;font-size:12px;font-weight:bold}
+.gold{color:#d9ad45}
+.avatar{width:38px;height:38px;border-radius:50%;background:#d9ad45;color:#111;display:grid;place-items:center;font-weight:bold}
+main{max-width:1050px;margin:auto;padding:22px 16px 90px}
+.page{display:none}.page.active{display:block}
+.hero{padding:25px;border:1px solid #4a391a;border-radius:20px;background:#15120b}
+.small{color:#d9ad45;font-size:12px;font-weight:bold;letter-spacing:2px}
+h1{font-size:30px;margin:8px 0}h2{font-size:27px;margin:8px 0}h3{margin:0}
+.muted{color:#999}
+.primary{background:#d9ad45;color:#111;border:0;border-radius:12px;padding:14px 18px;font-weight:bold}
+.secondary{background:#171717;color:#ddd;border:1px solid #333;border-radius:10px;padding:10px 14px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat,.card,.item,.profile{background:#121212;border:1px solid #292929;border-radius:15px;padding:15px}
+.stat b{font-size:22px;display:block}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.cover{height:150px;border-radius:11px;background:linear-gradient(135deg,#4c3a16,#161616);display:grid;place-items:center;color:#e0b84e;font-size:38px;font-weight:bold;margin-bottom:12px}
+.artist{font-size:13px;color:#999;margin-top:4px}
+.like{background:none;border:0;color:#aaa;font-size:22px}.liked{color:#ff6075}
+.feed{display:grid;gap:10px;margin-top:15px}
+.item{display:flex;align-items:center;gap:12px}.thumb{width:58px;height:58px;border-radius:10px;background:#302511;color:#d9ad45;display:grid;place-items:center;font-weight:bold}.grow{flex:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.chip{border:1px solid #333;background:#111;color:#aaa;border-radius:20px;padding:9px 13px}
+.form{display:grid;gap:14px;margin-top:18px}label{color:#aaa;font-size:13px}input,select{display:block;width:100%;margin-top:7px;background:#111;color:white;border:1px solid #333;border-radius:10px;padding:13px}
+.upload{border:1px dashed #6b5525;border-radius:17px;padding:25px;text-align:center;background:#12100a}
+.dest{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dest label{background:#111;border:1px solid #292929;padding:12px;border-radius:10px}.dest input{display:inline;width:auto;margin:0 7px 0 0}
+.journey{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:18px 0}.step{text-align:center;font-size:11px;color:#777;border-bottom:2px solid #292929;padding:8px}.step:first-child{color:#d9ad45;border-color:#d9ad45}
+.money{font-size:42px;font-weight:bold;margin:8px 0}
+.menu{display:grid;gap:9px;margin-top:18px}.menu button{text-align:left;background:#171717;color:#ddd;border:1px solid #292929;padding:14px;border-radius:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:68px;background:#0b0b0bf5;border-top:1px solid #292929;display:grid;grid-template-columns:repeat(5,1fr);z-index:10}
+.nav{background:none;border:0;color:#777;font-size:11px}.nav b{display:block;font-size:20px}.nav.active{color:#d9ad45}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#d9ad45;color:#111;padding:12px 16px;border-radius:10px;font-weight:bold;display:none;z-index:20}
+@media(max-width:700px){.cards{grid-template-columns:1fr}.cover{height:185px}.journey{grid-template-columns:repeat(3,1fr)}.dest{grid-template-columns:1fr 1fr}.hero .row{flex-direction:column;align-items:flex-start}.hero .primary{width:100%}}
+</style>
+</head>
+<body>
+
+<header class="top">
+<div class="brand"><div class="ab">AB</div><span>DistroWave <span class="gold">by AlvordBeats</span></span></div>
+<div class="avatar">A</div>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+<div class="hero">
+<div class="row">
+<div><div class="small">WELCOME BACK</div><h1>Good evening, Artist.</h1><p class="muted">What are you creating today?</p></div>
+<button class="primary" onclick="go('upload')">＋ Upload Music</button>
+</div>
+</div>
+
+<div class="stats">
+<div class="stat"><b>4</b><span class="muted">Releases</span></div>
+<div class="stat"><b>128</b><span class="muted">Followers</span></div>
+<div class="stat"><b>12.8K</b><span class="muted">Streams</span></div>
+</div>
+
+<div class="row"><h3>Discover music</h3><button class="secondary" onclick="go('discover')">See all</button></div>
+
+<div class="cards" style="margin-top:12px">
+<div class="card"><div class="cover">MW</div><div class="row"><div><b>Midnight Wave</b><div class="artist">Jay Moyo</div></div><button class="like" onclick="like(this)">♡</button></div></div>
+<div class="card"><div class="cover">NB</div><div class="row"><div><b>New Beginnings</b><div class="artist">Rudo K</div></div><button class="like" onclick="like(this)">♡</button></div></div>
+<div class="card"><div class="cover">KM</div><div class="row"><div><b>Keep Moving</b><div class="artist">Tino Beats</div></div><button class="like" onclick="like(this)">♡</button></div></div>
+</div>
+</section>
+
+<section id="discover" class="page">
+<div class="small">COMMUNITY</div><h2>Discover music</h2><p class="muted">Find artists and new releases.</p>
+<div class="chips"><button class="chip">All</button><button class="chip">Afro Dancehall</button><button class="chip">Hip-Hop</button><button class="chip">Gospel</button></div>
+<div class="feed">
+<div class="item"><div class="thumb">MW</div><div class="grow"><b>Midnight Wave</b><div class="artist">Jay Moyo · Afro Dancehall</div></div><button class="like" onclick="like(this)">♡</button><button class="secondary" onclick="follow(this)">Follow</button></div>
+<div class="item"><div class="thumb">NB</div><div class="grow"><b>New Beginnings</b><div class="artist">Rudo K · Gospel</div></div><button class="like" onclick="like(this)">♡</button><button class="secondary" onclick="follow(this)">Follow</button></div>
+<div class="item"><div class="thumb">KM</div><div class="grow"><b>Keep Moving</b><div class="artist">Tino Beats · Hip-Hop</div></div><button class="like" onclick="like(this)">♡</button><button class="secondary" onclick="follow(this)">Follow</button></div>
+</div>
+</section>
+
+<section id="upload" class="page">
+<div class="small">RELEASE JOURNEY</div><h2>Upload your music</h2><p class="muted">DistroWave guides you from audio to release.</p>
+<div class="journey"><div class="step">1<br>Audio</div><div class="step">2<br>Artwork</div><div class="step">3<br>Details</div><div class="step">4<br>Stores</div><div class="step">5<br>Checks</div><div class="step">6<br>Submit</div></div>
+<div class="upload"><b style="font-size:30px;color:#d9ad45">♫</b><h3>Select your audio</h3><p class="muted">MP3 or WAV</p><input id="audio" type="file" accept="audio/*"></div>
+<div class="form">
+<label>Release title<input id="title" placeholder="Example: Hard Life"></label>
+<label>Artist name<input id="artist" placeholder="Your artist name"></label>
+<label>Genre<select id="genre"><option>Afro Dancehall</option><option>Afrobeats</option><option>Hip-Hop</option><option>Gospel</option><option>Reggae</option></select></label>
+<label>Cover artwork<input type="file" accept="image/*"></label>
+<label>Distribution destinations</label>
+<div class="dest">
+<label><input type="checkbox" checked>Spotify</label><label><input type="checkbox" checked>Apple Music</label><label><input type="checkbox" checked>YouTube Music</label>
+<label><input type="checkbox">Deezer</label><label><input type="checkbox">Amazon Music</label><label><input type="checkbox">TikTok</label>
+</div>
+<button class="primary" onclick="submitRelease()">Continue & Run Checks</button>
+</div>
+</section>
+
+<section id="music" class="page">
+<div class="small">YOUR CATALOG</div><h2>My Music</h2><p class="muted">Track your releases.</p>
+<div id="releases">
+<div class="item" style="margin-bottom:10px"><div class="thumb">HL</div><div class="grow"><b>Hard Life</b><div class="artist">Xhian Fakesmile Arts</div></div><span class="gold">Submitted</span></div>
+<div class="item"><div class="thumb">TP</div><div class="grow"><b>Time Pusher</b><div class="artist">Xhian Fakesmile Arts</div></div><span style="color:#62d39b">Live</span></div>
+</div>
+</section>
+
+<section id="earnings" class="page">
+<div class="small">MONEY</div><h2>Earnings</h2><div class="hero"><span class="muted">Available balance</span><div class="money">$24.86</div><button class="primary" onclick="toast('Withdrawal setup will be added in the next version.')">Withdraw</button></div>
+<div class="stats"><div class="stat"><b>$8.42</b><span class="muted">This month</span></div><div class="stat"><b>$124.86</b><span class="muted">Total earned</span></div><div class="stat"><b>12.8K</b><span class="muted">Streams</span></div></div>
+</section>
+
+<section id="profile" class="page">
+<div class="small">ARTIST ACCOUNT</div><h2>Profile</h2>
+<div class="profile"><div class="avatar" style="width:70px;height:70px">A</div><h3 style="margin-top:14px">Artist Name</h3><p class="muted">@artistname</p>
+<div class="menu"><button onclick="toast('Account settings coming next.')">⚙ Account settings</button><button onclick="toast('Payment details coming next.')">▣ Payment details</button><button onclick="toast('Distribution preferences coming next.')">◉ Distribution preferences</button><button onclick="toast('Help & support coming next.')">? Help & support</button></div></div>
+</section>
+
+</main>
+
+<nav class="bottom">
+<button class="nav active" onclick="go('home')"><b>⌂</b>Home</button>
+<button class="nav" onclick="go('discover')"><b>◉</b>Discover</button>
+<button class="nav" onclick="go('upload')"><b>＋</b>Upload</button>
+<button class="nav" onclick="go('music')"><b>♫</b>My Music</button>
+<button class="nav" onclick="go('profile')"><b>●</b>Profile</button>
+</nav>
+
+<div id="toast" class="toast"></div>
+
+<script>
+function go(id){
+document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
+event.currentTarget.classList.add('active');
+scrollTo(0,0)
+}
+function like(x){x.classList.toggle('liked');x.textContent=x.classList.contains('liked')?'♥':'♡'}
+function follow(x){x.textContent=x.textContent==='Follow'?'Following':'Follow'}
+function toast(m){let x=document.getElementById('toast');x.textContent=m;x.style.display='block';setTimeout(()=>x.style.display='none',2500)}
+function submitRelease(){
+let title=document.getElementById('title').value||'Untitled Release';
+let artist=document.getElementById('artist').value||'Artist Name';
+let x=document.createElement('div');
+x.className='item';x.style.marginBottom='10px';
+x.innerHTML='<div class="thumb">♫</div><div class="grow"><b>'+title.replace(/[<>]/g,'')+'</b><div class="artist">'+artist.replace(/[<>]/g,'')+'</div></div><span class="gold">Submitted</span>';
+document.getElementById('releases').prepend(x);
+toast('Release submitted. DistroWave checks are running.');
+go('music')
+}
+</script>
+</body>
+                                            </html>
